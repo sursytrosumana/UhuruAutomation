@@ -1,3 +1,4 @@
+// src/main/java/org/example/pages/Setup.java
 package org.example.pages;
 
 import org.openqa.selenium.WebDriver;
@@ -7,16 +8,16 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class Setup {
     private static WebDriver driver;
+    private static final String BASE_URL = "https://staging.uhuru.market/en/signin";
 
-
-    public static WebDriver initialize(String url) {
+    public static WebDriver initialize() {
         if (driver == null) {
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--start-maximized");
             driver = new ChromeDriver(options);
+            driver.manage().window().maximize();
         }
-        driver.get(url);
+        driver.get(BASE_URL);
         return driver;
     }
 

@@ -1,51 +1,37 @@
 package org.example.test;
 
+import org.example.pages.Setup;
+import org.example.pages.LoginPage;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.support.ui.*;
-
-import java.time.Duration;
+import org.openqa.selenium.WebDriver;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class loginTest {
 
     private WebDriver driver;
-
-    By phoneField = By.name("phoneNumber");
-    By passwordField = By.id("password");
-    By continueBtn = By.xpath("//button[normalize-space()='Continue']");
-    By logoImg = By.cssSelector("img[alt='Logo']");
+    private LoginPage loginPage;
 
     @BeforeEach
-    void initDriver() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("https://staging.uhuru.market/en/signin");
+    void setUp() {
+        // initialize browser, maximize, navigate to sign-in
+        driver    = Setup.initialize();
+        loginPage = new LoginPage(driver);
     }
 
     @AfterEach
-    void quitDriver() {
-        if (driver != null) {
-            driver.quit();
-        }
+    void tearDown() {
+        Setup.quitDriver();
     }
 
     @Test
-    @DisplayName("Login with valid creds shows dashboard logo")
+    @DisplayName("Login with valid credentials shows dashboard logo")
     void loginShowsDashboardLogo() {
-        driver.findElement(phoneField).sendKeys("68 012 3793");
-        driver.findElement(passwordField).sendKeys("Nepal@123455");
-        driver.findElement(continueBtn).click();
-
-        WebElement logo = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(logoImg));
-
-        assertTrue(logo.isDisplayed(),
-                "Dashboard logo should be visible after login");
-
+        loginPage.login("68 012 3793","Nepal@123455" );
+        assertTrue(
+                loginPage.isDashboardLogoVisible(),
+                "Dashboard logo should be visible after login"
+        );
     }
 }
