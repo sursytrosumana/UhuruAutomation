@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.List;
 
 public class SearchPage {
     private final WebDriver driver;
@@ -19,14 +18,11 @@ public class SearchPage {
     private final By searchField = By.id("search");
     // Locator for the results grid container
     private final By resultsContainer = By.cssSelector(
-            "div.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3.gap-x-10.gap-y-10"
+            "div.grid.grid-cols-1.md:grid-cols-2.lg:grid-cols-3.gap-x-10.gap-y-10"
     );
-    // Locator for each result item link
-    private final By resultItems = By.cssSelector(
-            "div.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3.gap-x-10.gap-y-10 > a"
-    );
-    // Locator for the product title within each result card
-    private final By productTitle = By.cssSelector("div.my-3 span.font-medium");
+
+    //Locator for add to cart button
+    By addToCart = By.xpath("//div[contains(@class,'flex') and contains(@class,'justify-center')]//button[normalize-space()='Add to Cart']");
 
     public SearchPage(WebDriver driver) {
         this.driver = driver;
@@ -59,20 +55,11 @@ public class SearchPage {
         );
     }
 
-    /**
-     * Returns true if any result card’s title exactly matches the given text.
-     */
-    /**
-     * Returns true if a product link whose href ends with the slug of the given text is visible.
-     */
-    public boolean isSearchResultVisible(String text) {
-        // Convert "Funky Denim Jeans" → "funky-denim-jeans"
-        String slug = text.toLowerCase().replaceAll("\\s+", "-");
-        // Look for an <a> whose href ends with "/funky-denim-jeans"
-        By linkLocator = By.cssSelector("a[href$='/" + slug + "']");
-        return wait.until(
-                ExpectedConditions.visibilityOfElementLocated(linkLocator)
-        ).isDisplayed();
+    public void clickAddToCart(){
+        WebElement addToCartElement = wait.until(ExpectedConditions.elementToBeClickable(addToCart));
+       addToCartElement.click();
     }
+
+
 
 }

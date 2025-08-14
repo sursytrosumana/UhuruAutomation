@@ -70,8 +70,10 @@ public class SearchTest {
                 actualTitle,
                 "Expected first result title to be exactly '" + item + "', but was '" + actualTitle + "'"
         );
-        // ─── to here ───
+
+        searchPage.clickAddToCart();
     }
+
 
 
 }
