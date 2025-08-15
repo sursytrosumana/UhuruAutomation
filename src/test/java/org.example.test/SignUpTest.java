@@ -48,16 +48,15 @@ public class SignUpTest {
     public void agreeButtonEnablesAfterValidInput() {
         String phoneLocal = randomLocalPhone();
 
-        signUp
-                .open()
-                .switchToPhoneTab()
-                .setFirstName("Test")
-                .setLastName("User")
-                .selectGender("Male")
-                .setPhone(phoneLocal)
-                .setPassword("Str0ng!Passw0rd")
-                .setConfirmPassword("Str0ng!Passw0rd")
-                .acceptTerms()
-                        .submit();
+        signUp.open();
+        signUp.switchToPhoneTab();
+        signUp.setFirstName("Test");
+        signUp.setLastName("User");
+        signUp.selectGender("Male");
+        signUp.setPhone(phoneLocal);
+        signUp.setPassword("Str0ng!Passw0rd");
+        signUp.setConfirmPassword("Str0ng!Passw0rd");
+        signUp.acceptTerms();
+        signUp.submit();
     }
 }
