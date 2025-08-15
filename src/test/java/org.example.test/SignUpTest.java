@@ -37,7 +37,6 @@ public class SignUpTest {
     }
 
     private String randomLocalPhone() {
-        // 9-digit local number starting with 7 → 7XXXXXXXX
         Random r = new Random();
         StringBuilder sb = new StringBuilder("7");
         for (int i = 0; i < 8; i++) sb.append(r.nextInt(10));
